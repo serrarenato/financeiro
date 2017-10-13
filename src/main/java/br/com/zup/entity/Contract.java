@@ -1,5 +1,6 @@
 package br.com.zup.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,8 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-public class Contract {
+public class Contract implements Serializable {
+
+	private static final long serialVersionUID = 12422142342343L;
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,20 +32,27 @@ public class Contract {
 	private Date date;
 	@ManyToOne
 	@JoinColumn(name = "client_id")
+	@JsonBackReference
 	private Client client;
 	@ManyToOne
 	@JoinColumn(name = "price_id")
+	@JsonBackReference
 	private Price price;
 	@ManyToOne
 	@JoinColumn(name = "lineofBusiness_id")
+	@JsonBackReference
 	private LineofBusiness lineofBusiness;
 
-	public Contract(String name, String value, String status, Date date) {
+	public Contract(String name, String value, String status, Date date, Client client, Price price,
+			LineofBusiness lineofBusiness) {
 		super();
 		this.name = name;
 		this.value = value;
 		this.status = status;
 		this.date = date;
+		this.client = client;
+		this.price = price;
+		this.lineofBusiness = lineofBusiness;
 	}
 
 	public long getId() {

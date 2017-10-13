@@ -1,5 +1,6 @@
 package br.com.zup.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Client {
+public class Client implements Serializable {
+
+	private static final long serialVersionUID = 142342342342L;
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +31,11 @@ public class Client {
 	@Column
 	private String status;
 	@Column
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 
 	@OneToMany(mappedBy = "client", targetEntity = Contract.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Contract> contracts;
 
 	public Client(String name, String value, String status, Date date) {
@@ -37,17 +45,14 @@ public class Client {
 		this.status = status;
 		this.date = date;
 	}
-	
 
 	public List<Contract> getContracts() {
 		return contracts;
 	}
 
-
 	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
 	}
-
 
 	public long getId() {
 		return id;

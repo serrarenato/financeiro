@@ -1,5 +1,6 @@
 package br.com.zup.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Price {
+public class Price implements Serializable {
+
+	private static final long serialVersionUID = 175678678678L;
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +32,10 @@ public class Price {
 	private String status;
 	@Column
 	private Date date;
-	
-	@OneToMany(mappedBy = "price", targetEntity = Contract.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Contract> contracts;
 
-	
+	@OneToMany(mappedBy = "price", targetEntity = Contract.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Contract> contracts;
 
 	public Price(String name, String description, String status, Date date) {
 		super();
@@ -40,83 +45,56 @@ public class Price {
 		this.date = date;
 	}
 
-
-
 	public long getId() {
 		return id;
 	}
-
-
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-
-
 	public String getName() {
 		return name;
 	}
-
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
 	public String getDescription() {
 		return description;
 	}
-
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
-
 	public String getStatus() {
 		return status;
 	}
-
-
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-
-
 	public Date getDate() {
 		return date;
 	}
-
-
 
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
-
-
 	public Price() {
 
 	}
-
-
 
 	public List<Contract> getContracts() {
 		return contracts;
 	}
 
-
-
 	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
 	}
-
 
 }
