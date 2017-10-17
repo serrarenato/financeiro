@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,16 +22,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/home").permitAll()
-				.antMatchers("/login").permitAll()				
-				.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()  //remover isso
+
+				.antMatchers("/login").permitAll().antMatchers("/h2").permitAll().antMatchers("/h2/*").permitAll()
+				.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll() // remover isso
 				.anyRequest().authenticated().and()
-				
+
 				// filtra requisições de login
 				.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
 						UsernamePasswordAuthenticationFilter.class)
 
 				// filtra outras requisições para verificar a presença do JWT no header
 				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		// add this line to use H2 web console
+		httpSecurity.headers().frameOptions().disable();
 	}
 
 	@Override

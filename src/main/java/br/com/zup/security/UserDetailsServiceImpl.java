@@ -31,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		List<GrantedAuthority> authorityListAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
 		List<GrantedAuthority> authorityListUser = AuthorityUtils.createAuthorityList("ROLE_USER");
 		// Verificar quando é Admin ou nao
-		return new User(applicationUser.getUsername(), applicationUser.getPassword(), authorityListAdmin);
+		return new User(applicationUser.getUsername(), applicationUser.getPassword(),
+				applicationUser.isAdmin() ? authorityListAdmin : authorityListUser);
 	}
 }

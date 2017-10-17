@@ -24,8 +24,4 @@ public class Application {
 		return "Hello buddy!";
 	}
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

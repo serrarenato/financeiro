@@ -2,6 +2,7 @@ package br.com.zup.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,16 @@ public class ApplicationUser implements Serializable {
 	private long id;
 	private String username;
 	private String password;
+	@Column(name = "is_admin")
+	private boolean isAdmin;
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public long getId() {
 		return id;
