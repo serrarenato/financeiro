@@ -17,7 +17,7 @@ public class TokenAuthenticationService {
 	// EXPIRATION_TIME = 10 dias
 
 
-	static void addAuthentication(HttpServletResponse response, String username) {
+	static void addAuthentication(HttpServletResponse response, String username, String role) {
 		String JWT = Jwts.builder().setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
@@ -39,4 +39,11 @@ public class TokenAuthenticationService {
 		}
 		return null;
 	}
+	
+	public static String getAuthentication(String username, String role) {
+		return Jwts.builder().setSubject(username)
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
+	}
+	
 }

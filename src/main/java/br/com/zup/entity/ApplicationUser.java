@@ -22,6 +22,17 @@ public class ApplicationUser implements Serializable {
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 
+	
+	public ApplicationUser(long id, String username, String password, boolean isAdmin) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.isAdmin = isAdmin;
+	}
+	public ApplicationUser() {
+	}
+
 	public boolean isAdmin() {
 		return isAdmin;
 	}
